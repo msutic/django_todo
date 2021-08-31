@@ -1,6 +1,12 @@
 <h1>To Do</h1>
-<ul>
-    {% for task in tasks %}
-    <li>{{task}}</li>
-    {% endfor %}
-</ul>
+<form>
+    {{form.title}}
+    <button type="submit">Add Task</button>
+</form>
+
+{% for task in tasks %}
+<div>
+    <p>{{ task }}</p>
+</div>
+{% endfor %}
+
