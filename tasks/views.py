@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.http import HttpResponse
 
 
@@ -21,3 +22,17 @@ def index(request):
         'form': form,
     }
     return render(request, 'tasks/list.html', context)
+
+def task_detail(request, pk):
+    task = Task.objects.get(id=pk)
+
+    form = TaskForm(instance=task)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+        return redirect('/tasks')
+
+    context = {'form': form}
+
+    return render(request, 'tasks/detail.html', context)
