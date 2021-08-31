@@ -36,3 +36,13 @@ def task_detail(request, pk):
     context = {'form': form}
 
     return render(request, 'tasks/detail.html', context)
+
+def task_delete(request, pk):
+    item = Task.objects.get(id=pk)
+
+    if request.method == 'POST':
+        item.delete()
+        return redirect('/tasks')
+
+    context = {'item': item}
+    return render(request, 'tasks/delete.html', context)

@@ -7,9 +7,12 @@
 
 {% for task in tasks %}
 <div>
+    <p>
     <a href="{% url 'tasks:task-detail' task.pk %}">
-        <p>{{ task }}</p>
+        {{ task }}
     </a>
+    <a href="{% url 'tasks:task-delete' task.pk %}">Delete</a>
+    </p>    
 </div>
 {% endfor %}
 
