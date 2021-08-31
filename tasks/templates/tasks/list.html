@@ -9,7 +9,11 @@
 <div>
     <p>
     <a href="{% url 'tasks:task-detail' task.pk %}">
-        {{ task }}
+        {% if task.complete %}
+        <strike>{{ task }}</strike>
+        {% else %}
+        <span>{{ task }}</span>
+        {% endif %}
     </a>
     <a href="{% url 'tasks:task-delete' task.pk %}">Delete</a>
     </p>    
