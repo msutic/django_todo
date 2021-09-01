@@ -3,12 +3,10 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.urls.base import reverse_lazy
 from django.views import generic
-from django.contrib.auth.views import LoginView
-
+from django.contrib.auth.views import LoginView, redirect_to_login
 
 from .models import Task
 from .forms import TaskForm
-# Create your views here.
 
 
 class LandingPageView(generic.TemplateView):
@@ -24,8 +22,9 @@ class CustomLoginView(LoginView):
         return reverse_lazy('tasks')
 
 
-
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
     tasks = Task.objects.all()
     form = TaskForm()
 
@@ -42,6 +41,8 @@ def index(request):
     return render(request, 'tasks/list.html', context)
 
 def task_detail(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('/login')
     task = Task.objects.get(id=pk)
 
     form = TaskForm(instance=task)
@@ -56,6 +57,8 @@ def task_detail(request, pk):
     return render(request, 'tasks/detail.html', context)
 
 def task_delete(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('/login')
     item = Task.objects.get(id=pk)
 
     if request.method == 'POST':
