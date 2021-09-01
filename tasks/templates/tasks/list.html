@@ -1,22 +1,55 @@
-<h1>To Do</h1>
-<form method="POST" action=".">
-    {% csrf_token %}
-    {{form.title}}
-    <input type="submit" name="Add Task">
-</form>
+{% extends "base.html" %}
 
-{% for task in tasks %}
-<div>
-    <p>
-    <a href="{% url 'tasks:task-detail' task.pk %}">
-        {% if task.complete %}
-        <strike>{{ task }}</strike>
-        {% else %}
-        <span>{{ task }}</span>
-        {% endif %}
-    </a>
-    <a href="{% url 'tasks:task-delete' task.pk %}">Delete</a>
-    </p>    
+{% block content %}
+
+
+<div class=>
+    
 </div>
-{% endfor %}
+
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
+        <form method="POST" action=".">
+            {% csrf_token %}
+            {{form.title}}
+            <input type="submit" name="Add Task">
+        </form>
+        </div>
+    </div>
+  </section>
+
+<section class="text-gray-600 body-font">
+    <div class="container px-5  mx-auto">
+        {% for task in tasks %}
+            <div class="flex items-center lg:w-3/5 mx-auto border-b pb-3 mb-3 border-gray-200 sm:flex-row flex-col">
+                <div class="sm:w-32 w-20  inline-flex items-center justify-center text-yellow-500 flex-shrink-0">
+                    {% if task.complete %}
+                        Done
+                    {% else %}
+                        Not Done
+                    {% endif %}
+                </div>
+                <div class="flex-grow sm:text-left text-center ml-5 mt-6 sm:mt-0">
+                    {% if task.complete %}
+                        <strike><h2 class="text-gray-900 text-lg title-font font-medium mb-2">{{ task }}</h2></strike>
+                    {% else %}
+                        <h2 class="text-gray-900 text-lg title-font font-medium mb-2">{{ task }}</h2>
+                    {% endif %}
+                    <a href="{% url 'tasks:task-detail' task.pk %}" class="mt-3 text-yellow-500 inline-flex items-center">
+                        Update
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="{% url 'tasks:task-delete' task.pk %}" class="mt-3 ml-4 text-yellow-500 inline-flex items-center">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+  </section>
+{% endblock content %}
+
 

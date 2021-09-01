@@ -1,11 +1,17 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import HttpResponse
+from django.views import generic
 
 
 from .models import Task
 from .forms import TaskForm
 # Create your views here.
+
+
+class LandingPageView(generic.TemplateView):
+    template_name = 'landing.html'
+
 
 def index(request):
     tasks = Task.objects.all()
