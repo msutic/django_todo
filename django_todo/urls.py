@@ -15,8 +15,8 @@ Including another URLconf
 """
 from os import name
 
-from django.contrib.auth.views import LoginView, LogoutView
-from tasks.views import LandingPageView
+from django.contrib.auth.views import LogoutView, LoginView
+from tasks.views import LandingPageView, CustomSignupView
 from django.contrib import admin
 from django.urls import path, include
 
@@ -26,4 +26,5 @@ urlpatterns = [
     path('tasks/', include('tasks.urls', namespace='tasks')),
     path('login/', LoginView.as_view(), name='login-page'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('signup/', CustomSignupView.as_view(), name='signup'),
 ]

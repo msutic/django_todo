@@ -3,7 +3,8 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.urls.base import reverse_lazy
 from django.views import generic
-from django.contrib.auth.views import LoginView, redirect_to_login
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import Task
 from .forms import TaskForm
@@ -13,13 +14,21 @@ class LandingPageView(generic.TemplateView):
     template_name = 'landing.html'
 
 
-class CustomLoginView(LoginView):
-    template_name = 'registration/login.html'
-    fields = '__all__'
-    redirect_authenticated_user = True
+# class CustomLoginView(LoginView):
+#     template_name = 'registration/login.html'
+#     fields = '__all__'
+#     redirect_authenticated_user = True
+
+#     def get_success_url(self) -> str:
+#         return reverse('tasks')
+
+
+class CustomSignupView(generic.CreateView):
+    template_name = 'registration/signup.html'
+    form_class = UserCreationForm
 
     def get_success_url(self) -> str:
-        return reverse_lazy('tasks')
+        return reverse('login-page')
 
 
 def index(request):
