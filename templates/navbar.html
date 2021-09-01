@@ -9,12 +9,23 @@
       <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
         <a href="{% url 'tasks:task-list' %}" class="mr-5 hover:text-gray-900">My Tasks</a>
       </nav>
-      <a href="">Signup</a>
-      <button class="ml-3 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          Login
+      {% if request.user.is_authenticated %}
+        <p>Logged in as: {{ request.user.username }}</p>
+        <a href="{% url 'logout' %}" class="ml-3 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+          Logout
         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
           <path d="M5 12h14M12 5l7 7-7 7"></path>
         </svg>
-      </button>
+      </a>
+      {% else %}
+        <a href="">Signup</a>
+        <a href="{% url 'login-page' %}" class="ml-3 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+            Login
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      {% endif %}
+      
     </div>
   </header>

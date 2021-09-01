@@ -38,12 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Local apps
+    'tasks',
+
     # Third party apps
     'crispy_forms',
     "crispy_tailwind",
 
-    # Local apps
-    'tasks',
+    
+    
 ]
 
 MIDDLEWARE = [
@@ -125,6 +128,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/tasks'
+LOGIN_URL = '/login'
+
+LOGOUT_REDIRECT_URL = '/tasks'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
