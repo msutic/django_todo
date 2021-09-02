@@ -23,21 +23,19 @@ class CustomSignupView(generic.CreateView):
 
 
 def index(request):
+    user = request.user
     if not request.user.is_authenticated:
         return redirect('/login')
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(user=user)
     form = TaskForm()
-    user = request.user
+    
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
-
             obj.user = user
-
             obj.save()
-
         return redirect('.')
 
     context = {
