@@ -14,15 +14,6 @@ class LandingPageView(generic.TemplateView):
     template_name = 'landing.html'
 
 
-# class CustomLoginView(LoginView):
-#     template_name = 'registration/login.html'
-#     fields = '__all__'
-#     redirect_authenticated_user = True
-
-#     def get_success_url(self) -> str:
-#         return reverse('tasks')
-
-
 class CustomSignupView(generic.CreateView):
     template_name = 'registration/signup.html'
     form_class = UserCreationForm
@@ -36,11 +27,17 @@ def index(request):
         return redirect('/login')
     tasks = Task.objects.all()
     form = TaskForm()
+    user = request.user
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+
+            obj.user = user
+
+            obj.save()
+
         return redirect('.')
 
     context = {
